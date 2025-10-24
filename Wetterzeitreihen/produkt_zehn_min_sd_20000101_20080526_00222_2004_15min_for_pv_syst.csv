@@ -1,14 +1,4 @@
-#Site; irgendwo_in_deutschland
-#Country; germany
-#Data Source; DWD_station_232
-#Time step; 10 minutes
-#Year; 2004
-#Latitude;
-#Longitude
-#Altitude
-#Time Zone; 1  
 Year;Month;Day;Hour;Minute;GHI
-;;;;;W/m2
 2004;1;1;0;0;0.0
 2004;1;1;0;15;0.0
 2004;1;1;0;30;0.0
