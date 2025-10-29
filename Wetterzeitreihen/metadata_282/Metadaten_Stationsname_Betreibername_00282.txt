@@ -1,0 +1,8 @@
+Stations_ID;Stationsname;Von_Datum;Bis_Datum
+   282;Bamberg;19490101;19600531
+   282;Bamberg;19600601;
+
+Stations_ID;Betreibername;Von_Datum;Bis_Datum
+   282;Wetterdienst;19490101;19521110
+   282;DWD;19521111;
+generiert: 02.10.2025 --  Deutscher Wetterdienst  --

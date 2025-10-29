@@ -1,0 +1,6 @@
+Stations_ID;Stationsname;Geo. Laenge [Grad];Geo. Breite [Grad];Stationshoehe [m];Geberhoehe ueber Grund [m];Von_Datum;Bis_Datum;Geraetetyp Name;Messverfahren;eor;
+282;Bamberg;10.91;49.88;239;6;19950531;20071024;SONIe Sonnenenergie-Sensor;Sonnenscheindauer, elektr.;eor;
+282;Bamberg;10.91;49.88;239;6;20071025;20081125;SCAPP;Strahlungsmessung, elektr.;eor;
+282;Bamberg;10.92;49.87;239.96;6;20081126;20140101;SCAPP;Strahlungsmessung, elektr.;eor;
+282;Bamberg;10.92;49.87;239.96;6;20140108;20250919;SCAPP;Strahlungsmessung, elektr.;eor;
+generiert: 02.10.2025 --  Deutscher Wetterdienst  --
