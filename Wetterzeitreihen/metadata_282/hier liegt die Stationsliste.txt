@@ -1,0 +1,3 @@
+C:\Users\CasparGross\Documents\Wetterdaten für Rasmus
+
+musste ich leider lokal abspeicher, da GitHub Probleme mit dem Excel-Format hatte
