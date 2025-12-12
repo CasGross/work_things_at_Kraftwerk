@@ -1,0 +1,15 @@
+#Meteo hourly data;;;;;;;
+#Description of Data Set e.g. DWD DataBase;;;;;;;
+# GHI. DHI and Temp are retrieved. Set Time Zone to 0. since time stamp is in UTC!;;;;;;;
+#Site; 04466_Schleswig;;;;;;;
+#Country; germany;;;;;;;
+#Data Source; DWD_station_04466;;;;;;;
+#Time step; 1h;;;;;;;
+#Year; 2004;;;;;;;
+#Latitude; 54.5275;;;;;;;
+#Longitude; 9.5487;;;;;;;
+#Altitude; 43;;;;;;;
+#Time Zone; 1  ;;;;;;;
+#Time reference;UT;;;;;;
+#Hour Shift;-1;;;;;;
+#Time Shift;0;;;;;;
