@@ -1,0 +1,7 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+   662;   84.00; 52.2439; 10.4918;19391201;19480430;Braunschweig
+   662;   80.00; 52.2901; 10.4443;19480501;19540202;Braunschweig
+   662;   81.20; 52.2914; 10.4464;19540203;19720531;Braunschweig
+   662;   81.20; 52.2914; 10.4465;19720601;20060531;Braunschweig
+   662;   81.44; 52.2915; 10.4464;20060601;20140901;Braunschweig
+   662;   81.44; 52.2915; 10.4464;20140902;        ;Braunschweig
