@@ -1,0 +1,15 @@
+#Meteo hourly data;;;;;;;
+#Description of Data Set e.g. DWD DataBase;;;;;;;
+# GHI. DHI and Temp are retrieved. Set Time Zone to 0. since time stamp is in UTC!;;;;;;;
+#Site; Sankt Peter-Ording_experimental;;;;;;;
+#Country; germany;;;;;;;
+#Data Source; DWD_station_4393;;;;;;;
+#Time step; 1h;;;;;;;
+#Year; 2025;;;;;;;
+#Latitude; 54.3279;;;;;;;
+#Longitude; 8.6031;;;;;;;
+#Altitude; 4.88;;;;;;;
+#Time Zone; 1  ;;;;;;;
+#Time reference;UT;;;;;;
+#Hour Shift;-1;;;;;;
+#Time Shift;0;;;;;;
