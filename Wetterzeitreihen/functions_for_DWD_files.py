@@ -1,5 +1,86 @@
 # alle Funktionen für die Analyse der Wetterdaten
 
+def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
+        
+    import pandas as pd
+    import numpy as np
+    name_stations_excel = r"C:\Users\CasparGross\Documents\Wetterdaten für Rasmus\Stationen_1h_incl_2025.csv"
+
+    path_to_downloaded_zips = r"C:\Users\CasparGross\KRAFTWERK RPS GmbH\01 - CC\01_CC_NEU\04_CC_PLANNING&IMPLEMENTATION\03_YIELD\01_GHI-DATA_spec\DWD_observations_germany_hourly_20260216.zip\DWD_observations_germany_hourly_20260216/solar/"
+
+    # CSV-Datei laden
+    stationen_1h_meta = pd.read_csv(name_stations_excel,sep=';',decimal=',', skiprows=2)
+    stationen_1h_meta
+
+
+
+    # indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1])
+    indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1 and stationen_1h_meta[datenval][i] != -1])
+    # indicees_
+    #stationen_mit_daten = stationen_1h_meta(indicees_)
+    # stationen_mit_daten
+
+    # hier einmal den df für 1h erstellen, indem wir die Einträge der vollen Stunde übernehmen.
+    stationen_mit_daten = stationen_1h_meta.iloc[indicees_].reset_index(drop=True)  
+    stationen_mit_daten
+
+
+    print("stationen mit Daten gefiltert")
+    stationen_mit_daten["lat"]
+
+
+
+
+    # Distanz berechnen
+
+
+    # from pyproj import Transformer
+    from geographiclib.geodesic import Geodesic
+    import math
+
+
+    # def geodesic_distance_m(lat1, lon1, lat2, lon2):
+    #     res = Geodesic.WGS84.Inverse(lat1, lon1, lat2, lon2)
+    #     return res['s12']  # in meter
+
+    # d = geodesic_distance_m(52.5200, 13.4050, 48.1371, 11.5754)
+
+    def abstand_berechnen(stationen_mit_daten):
+        
+        # bisschen gekürzt
+
+        Dist    = stationen_mit_daten["lat"]
+        for i in range(len(stationen_mit_daten[year])):
+            lat = float(stationen_mit_daten["lat"][i])
+            long  = float(stationen_mit_daten["long"][i])
+            #print(lat,long)
+            Dist[i] = Geodesic.WGS84.Inverse(lat, long, lat_kraftwerk, long_kraftwerk)['s12']  # ist ein ziemlich cooles Packet und gibt die als Output ein Dict, wo  's12' die Distanz in meter ist
+            
+            #print(Dist[i] )
+        return(Dist)
+
+
+
+    Dist = abstand_berechnen(stationen_mit_daten)
+
+    Dist
+
+    # stationen_mit_daten["Ort"]
+
+
+    stationen_mit_daten["dist"] = Dist
+    stationen_mit_daten.sort_values(by=["dist"], ascending=True )
+
+    print("nächste Station",stationen_mit_daten["Ort"][Dist.idxmin()])
+    the_chosen_one = stationen_mit_daten.iloc[[Dist.idxmin()]]
+    # print(the_chosen_one)
+
+    id_DWD_station = the_chosen_one["ID"]
+    print("ID:",id_DWD_station)
+
+    
+
+
   
 def timeshift_WOZ_to_UTC_func(messdaten, start):
     '''
