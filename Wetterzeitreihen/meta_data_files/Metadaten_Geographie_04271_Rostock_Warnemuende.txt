@@ -1,0 +1,7 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+  4271;    4.00; 54.1816; 12.0862;19010101;19191231;Rostock-Warnemünde
+  4271;    1.00; 54.1761; 12.1063;19200101;19310331;Rostock-Warnemünde
+  4271;    1.00; 54.1765; 12.1154;19310401;19460203;Rostock-Warnemünde
+  4271;    4.00; 54.1796; 12.0812;19460204;19460629;Rostock-Warnemünde
+  4271;    4.72; 54.1802; 12.0805;19460630;20080423;Rostock-Warnemünde
+  4271;    4.78; 54.1803; 12.0808;20080424;        ;Rostock-Warnemünde

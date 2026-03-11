@@ -1,5 +1,12 @@
 # alle Funktionen für die Analyse der Wetterdaten
 
+
+def KML_in_dezimal(Kraftwerk):
+    lat_kraftwerk = Kraftwerk[0] + Kraftwerk[1]/60 + Kraftwerk[2]/3600    
+    long_kraftwerk = Kraftwerk[3] + Kraftwerk[4]/60 + Kraftwerk[5]/3600  
+    return long_kraftwerk, lat_kraftwerk
+
+
 def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
         
     import pandas as pd
@@ -69,7 +76,8 @@ def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
 
 
     stationen_mit_daten["dist"] = Dist
-    stationen_mit_daten.sort_values(by=["dist"], ascending=True )
+    stationen_nach_distanz = stationen_mit_daten.sort_values(by=["dist"], ascending=True )
+    
 
     print("nächste Station",stationen_mit_daten["Ort"][Dist.idxmin()])
     the_chosen_one = stationen_mit_daten.iloc[[Dist.idxmin()]]
@@ -77,6 +85,7 @@ def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
 
     id_DWD_station = the_chosen_one["ID"]
     print("ID:",id_DWD_station)
+    return stationen_nach_distanz
 
     
 
