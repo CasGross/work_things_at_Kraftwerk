@@ -126,7 +126,7 @@ def timeshift_WOZ_to_UTC_func(messdaten, start):
 
 # eine Funktion für alles
 
-def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,timestep,start, ende, save_validation,  save_as_file ):
+def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_validation,  save_as_file ):
     """
     
     """
@@ -137,9 +137,26 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,timestep,sta
     import os
     import matplotlib.pyplot as plt
 
+
+
+    # # # welches Jahr soll gefiltert werden?
+    if year == 2025:
+        start = pd.Timestamp('2025-01-01 00:00')
+        ende = pd.Timestamp('2025-12-31 23:50')
+    elif year == 2024:
+        start = pd.Timestamp('2024-01-01 00:00')
+        ende = pd.Timestamp('2024-12-31 23:50')
+    elif year == 2004:
+        start = pd.Timestamp('2004-01-01 00:00')
+        ende = pd.Timestamp('2004-12-31 23:50')
+    else:
+        print("zu untersuchendes Jahr nicht verfügbar")
+
+
+    timestep = '1h_'
+    
     name_GHI = dateinamen_als_liste[0]
     name_tamb = dateinamen_als_liste[1]
-
     meta_data_1 = dateinamen_als_liste[2]
     stationsID = dateinamen_als_liste[3]
 
@@ -365,7 +382,7 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,timestep,sta
         # nur ausführen wenn Datei ready ist, sonst wird bestehende Datei überschrieben 
         df_neu_relevant.to_csv(name_new_1, sep=';', index=False,header= ["#Meteo hourly data",'', '', '', '', '','', ''])
 
-        print("abgespeichert - metadaten händisch ergänzen!")
+        print("abgespeichert - inklusive metadaten für koherenz andere Jahre prüfen!")
     else:
         print("nicht gespeichert")
 
