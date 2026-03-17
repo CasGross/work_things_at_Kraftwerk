@@ -1,0 +1,6 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+  4336;  323.00; 49.2185;  7.1114;19490401;19550831;Ensheim
+  4336;  323.00; 49.2186;  7.1114;19550901;19890425;Ensheim
+  4336;  318.96; 49.2128;  7.1077;19890426;19891011;Ensheim
+  4336;  318.96; 49.2128;  7.1077;19891012;20150412;Ensheim
+  4336;  318.96; 49.2128;  7.1077;20150413;        ;Ensheim

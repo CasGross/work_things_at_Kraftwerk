@@ -126,24 +126,38 @@ def timeshift_WOZ_to_UTC_func(messdaten, start):
 
 # eine Funktion für alles
 
-def wetter_daten_laden_und_auf_fehler_checken(base_path_tamb,base_path_GHI, name_GHI, name_tamb,stationsID,timestep,start, ende,  save_as_file ):
+def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,timestep,start, ende, save_validation,  save_as_file ):
     """
     
     """
+
+
     import pandas as pd
     import numpy as np
     import os
     import matplotlib.pyplot as plt
 
-    
+    name_GHI = dateinamen_als_liste[0]
+    name_tamb = dateinamen_als_liste[1]
+
+    meta_data_1 = dateinamen_als_liste[2]
+    stationsID = dateinamen_als_liste[3]
+
+    base_path_tamb = r"C:\git\github\work_things_at_Kraftwerk\Wetterzeitreihen\DWD_tamb"
+    base_path_GHI = r"C:\git\github\work_things_at_Kraftwerk\Wetterzeitreihen\DWD_GHI_DHI"
+    base_path_meta = r"C:\git\github\work_things_at_Kraftwerk\Wetterzeitreihen\meta_data_files"
+
     # CSV-Datei laden
 
     file_path_GHI = os.path.join(base_path_GHI, name_GHI)
     file_path_tamb = os.path.join(base_path_tamb, name_tamb)
+    file_path_meta = os.path.join(base_path_meta, meta_data_1)
 
     # CSV-Datei laden
     df = pd.read_csv(file_path_GHI,sep=';')
-    df_Tamb = pd.read_csv(file_path_tamb,sep=';')
+    df_Tamb = pd.read_csv(file_path_tamb,sep=';')   
+    df_meta = pd.read_csv(file_path_meta,sep=';')
+
     print("daten geladen")
     df
 
@@ -239,22 +253,48 @@ def wetter_daten_laden_und_auf_fehler_checken(base_path_tamb,base_path_GHI, name
 
     # Df einfach um negative Werte bereinigen. (keine Interpolation oder so, aber bei wenigen Werten sollte das kein Problem sein)
 
-
-    negative_indices_ghi = negative_werte_bereinigen(df_neu_relevant, 'GHI')
-    df_neu_relevant['GHI'].loc[negative_indices_ghi] = 0
-
-    negative_indices_dhi = negative_werte_bereinigen(df_neu_relevant, 'DHI')
-    df_neu_relevant['DHI'].loc[negative_indices_dhi] = 0
+    df_neu_relevant['validation'] = 0
 
     negative_indices_tamb = negative_werte_bereinigen(df_neu_relevant, 'Tamb')
     df_neu_relevant['Tamb'].loc[negative_indices_tamb] = 7
+    df_neu_relevant['validation'].loc[negative_indices_tamb] = 2
+
+    negative_indices_ghi = negative_werte_bereinigen(df_neu_relevant, 'GHI')
+    df_neu_relevant['GHI'].loc[negative_indices_ghi] = 0
+    df_neu_relevant['validation'].loc[negative_indices_ghi] = 1
+
+    negative_indices_dhi = negative_werte_bereinigen(df_neu_relevant, 'DHI')
+    df_neu_relevant['DHI'].loc[negative_indices_dhi] = 0
+    df_neu_relevant['validation'].loc[negative_indices_dhi] = 1
+
+
 
     df_neu_relevant.loc[negative_indices_ghi]
 
     UTC.loc[negative_indices_ghi]
 
+
+
+    if save_validation:
+
+        # folder_path_validation = r"C:\git\github\work_things_at_Kraftwerk\Wetterzeitreihen\validation"
+        folder_path_validation = r"C:\Users\CasparGross\KRAFTWERK RPS GmbH\01 - CC\01_CC_NEU\04_CC_PLANNING&IMPLEMENTATION\03_YIELD\06_PVsyst_Import_Custom_Data_DWD\Procedure_Hourly\DWD_Weatherfiles_for_PV_syst"
+        folder_path_validation_specific = os.path.join(folder_path_validation, stationsID)
+        os.makedirs(folder_path_validation_specific, exist_ok=True)
+        start_string = start.strftime("%Y-%m-%d")
+        name_fig = ''.join([stationsID,"_",start_string,"_",timestep,'.png'])
         
-    print(f"Fehlerwerte GHI: {len(negative_indices_ghi)}")
+        file_path_fig = os.path.join(folder_path_validation_specific, name_fig)
+
+        name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.CSV'])
+        file_path_df_validation = os.path.join(folder_path_validation_specific, name_df)
+        df_neu_relevant.to_csv(file_path_df_validation, sep=';', index=False, header=['Year','Month','Day','Hour','Minute','GHI','DHI','Tamb','validation'])
+
+        
+
+
+        
+    # print(f"Fehlerwerte GHI: {len(negative_indices_ghi)}")
     plt.figure(figsize=(8,4))
     plt.plot(UTC.loc[negative_indices_ghi], df_neu_relevant.loc[negative_indices_ghi]['Hour'], linestyle="none", marker="x")
     plt.xlim(start, ende)
@@ -265,21 +305,56 @@ def wetter_daten_laden_und_auf_fehler_checken(base_path_tamb,base_path_GHI, name
     plt.title(stationsID)
     plt.grid(True)
     plt.tight_layout()
+    
+    if save_validation:
+        plt.savefig(file_path_fig)
+        print("Validierungs_ergebnisse gespeichert")
+    else:
+        print("Validierungs_ergebnisse nicht gespeichert")
     plt.show()
 
-    new_row = ['', '', '', '', '','W/m2','W/m2','deg.C']   
-    # einheiten einfügen bei CSV -> entkommentieren der beiden Zeilen unten
-    # #df_15 = pd.concat([pd.DataFrame([new_row], columns=df_15.columns), df_15], ignore_index=True) # nur einmal einfügen
-    # Einheiten-Spalte nur einmal einfügen:
-    df_neu_relevant = pd.concat([pd.DataFrame([new_row], columns=df_neu_relevant.columns), df_neu_relevant], ignore_index=True) 
-    df_neu_relevant
+     
+    
+    df_neu_relevant = df_neu_relevant.drop(columns=['validation'])
+
+
+
+    new_rows = [["#Description of Data Set e.g. DWD DataBase",'', '', '', '', '','', ''],
+            ["# GHI. DHI and Temp are retrieved. Set Time Zone to 0. since time stamp is in UTC!",'', '', '', '', '','', ''],
+            ["#Site", df_meta["Stationsname"].iloc[-1], '', '', '', '','', ''],
+            ["#Country",'germany', '', '', '', '','', ''],
+            ["#Data Source",int(df_meta["Stations_id"].iloc[-1]), '', '', '', '','', ''],
+            ["#Time step",'1h', '', '', '', '','', ''],
+            ["#Year", df_neu_relevant['Year'][20], '', '', '', '','', ''],
+            ["#Latitude", float(df_meta["Geogr.Breite"].iloc[-1])  , '', '', '', '','', ''],
+            ["#Longitude",float(df_meta["Geogr.Laenge"].iloc[-1])  , '', '', '', '','', ''],
+            ["#Altitude", float(df_meta["Stationshoehe"].iloc[-1]) , '', '', '', '','', ''],
+            ["#Time Zone",1, '', '', '', '','', ''],
+            ["#Time reference",'UT', '', '', '', '','', ''],
+            ["#Hour Shift",-1, '', '', '', '','', ''],
+            ["#Time Shift",0, '', '', '', '','', ''],
+            ['Year','Month','Day','Hour','Minute','GHI','DHI','Tamb'],
+            ['', '', '', '', '','W/m2','W/m2','deg.C']
+            ]
+
+    df_neu_relevant = pd.concat([pd.DataFrame(new_rows, columns=df_neu_relevant.columns), df_neu_relevant], ignore_index=True)
+
+    # löschen sobald funktioniert
+    # df_neu_relevant = pd.concat([pd.DataFrame([new_row], columns=df_neu_relevant.columns), df_neu_relevant], ignore_index=True) 
+    # df_neu_relevant
+
+
 
     #achtung! name muss noch im cache sein!
 
     # name_new_1 = name.replace('.csv', '_2024_1h_1_for_pv_syst.csv')
+
+
+
     if save_as_file :
         from ntpath import join
 
+        
 
         start_string = start.strftime("%Y-%m-%d")
         ende_string = ende.strftime("%Y-%m-%d") 
@@ -288,7 +363,7 @@ def wetter_daten_laden_und_auf_fehler_checken(base_path_tamb,base_path_GHI, name
         name_new_1 = ''.join([stationsID,"_",start_string,"_",ende_string,"_",timestep,'_1_',csv_eding])
 
         # nur ausführen wenn Datei ready ist, sonst wird bestehende Datei überschrieben 
-        df_neu_relevant.to_csv(name_new_1, sep=';', index=False, header=['Year','Month','Day','Hour','Minute','GHI','DHI','Tamb'])
+        df_neu_relevant.to_csv(name_new_1, sep=';', index=False,header= ["#Meteo hourly data",'', '', '', '', '','', ''])
 
         print("abgespeichert - metadaten händisch ergänzen!")
     else:

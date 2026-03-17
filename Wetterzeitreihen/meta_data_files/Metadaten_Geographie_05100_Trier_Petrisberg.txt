@@ -1,0 +1,5 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+  5100;  200.00; 49.7479;  6.6515;19300401;19371103;Trier-Petrisberg
+  5100;  265.00; 49.7482;  6.6589;19371104;20010611;Trier-Petrisberg
+  5100;  261.50; 49.7479;  6.6582;20010612;20071016;Trier-Petrisberg
+  5100;  261.15; 49.7479;  6.6583;20071017;        ;Trier-Petrisberg
