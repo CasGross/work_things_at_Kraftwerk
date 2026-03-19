@@ -1,0 +1,16 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+   867;  322.00; 50.2557; 10.9681;18820801;18870131;Lautertal-Oberlauter
+   867;  296.00; 50.2590; 10.9634;18870201;18930424;Lautertal-Oberlauter
+   867;  340.00; 50.2575; 10.9774;18930425;18940722;Lautertal-Oberlauter
+   867;  294.30; 50.2576; 10.9636;18940723;18960331;Lautertal-Oberlauter
+   867;  314.00; 50.2571; 10.9731;18960401;19250217;Lautertal-Oberlauter
+   867;  324.00; 50.2561; 10.9691;19250218;19341105;Lautertal-Oberlauter
+   867;  291.00; 50.2605; 10.9600;19341106;19460731;Lautertal-Oberlauter
+   867;  390.00; 50.2777; 10.9230;19460801;19490630;Lautertal-Oberlauter
+   867;  356.00; 50.2792; 10.9213;19490701;19520514;Lautertal-Oberlauter
+   867;  326.00; 50.2674; 10.9531;19520515;19650726;Lautertal-Oberlauter
+   867;  337.00; 50.2646; 10.9501;19650727;19920212;Lautertal-Oberlauter
+   867;  322.00; 50.2835; 10.9779;19920213;19920731;Lautertal-Oberlauter
+   867;  322.00; 50.2835; 10.9779;19920801;20041215;Lautertal-Oberlauter
+   867;  343.79; 50.3066; 10.9679;20041216;20141013;Lautertal-Oberlauter
+   867;  343.79; 50.3066; 10.9679;20141014;        ;Lautertal-Oberlauter

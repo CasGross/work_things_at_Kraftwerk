@@ -303,7 +303,7 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         
         file_path_fig = os.path.join(folder_path_validation_specific, name_fig)
 
-        name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.CSV'])
+        name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.csv'])
         file_path_df_validation = os.path.join(folder_path_validation_specific, name_df)
         df_neu_relevant.to_csv(file_path_df_validation, sep=';', index=False, header=['Year','Month','Day','Hour','Minute','GHI','DHI','Tamb','validation'])
 
