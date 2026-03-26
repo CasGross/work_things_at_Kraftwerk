@@ -251,7 +251,7 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
     # negative_values = df_neu_relevant[df_neu_relevant['GHI'] < 0]['GHI']
     def negative_werte_bereinigen(df_neu_relevant, spaltenname):
         
-        negative_indices = df_neu_relevant.index[df_neu_relevant[spaltenname] < 0]
+        negative_indices = df_neu_relevant.index[df_neu_relevant[spaltenname] < -100]
         print(f"Fehlerwerte {spaltenname}: {len(negative_indices)}")
         return negative_indices
 
@@ -299,9 +299,11 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         folder_path_validation_specific = os.path.join(folder_path_validation, stationsID)
         os.makedirs(folder_path_validation_specific, exist_ok=True)
         start_string = start.strftime("%Y-%m-%d")
-        name_fig = ''.join([stationsID,"_",start_string,"_",timestep,'.png'])
+        name_fig_ghi = ''.join([stationsID,"_",start_string,"_",timestep,'ghi.png'])
+        name_fig_tamb = ''.join([stationsID,"_",start_string,"_",timestep,'tamb.png'])
         
-        file_path_fig = os.path.join(folder_path_validation_specific, name_fig)
+        file_path_fig_ghi = os.path.join(folder_path_validation_specific, name_fig_ghi)
+        file_path_fig_tamb = os.path.join(folder_path_validation_specific, name_fig_tamb)
 
         name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.csv'])
         file_path_df_validation = os.path.join(folder_path_validation_specific, name_df)
@@ -317,18 +319,40 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
     plt.xlim(start, ende)
     plt.ylim(0, 24)
     plt.xticks(rotation=45)
-    plt.xlabel("Zeitpunkt im Jahr")
+    plt.xlabel("Zeitpunkt im Jahr für GHI-Fehlerwert")
     plt.ylabel("Uhrzeit des Fehlerwerts")
     plt.title(stationsID)
     plt.grid(True)
     plt.tight_layout()
     
     if save_validation:
-        plt.savefig(file_path_fig)
+        plt.savefig(file_path_fig_ghi)
         print("Validierungs_ergebnisse gespeichert")
     else:
         print("Validierungs_ergebnisse nicht gespeichert")
     plt.show()
+
+
+        
+    
+    plt.figure(figsize=(8,4))
+    plt.plot(UTC.loc[negative_indices_tamb], df_neu_relevant.loc[negative_indices_tamb]['Hour'], linestyle="none", marker="x")
+    plt.xlim(start, ende)
+    plt.ylim(0, 24)
+    plt.xticks(rotation=45)
+    plt.xlabel("Zeitpunkt im Jahr für T-amb-Fehlerwert")
+    plt.ylabel("Uhrzeit des Fehlerwerts")
+    plt.title(stationsID)
+    plt.grid(True)
+    plt.tight_layout()
+    
+    if save_validation:
+        plt.savefig(file_path_fig_tamb)
+        print("Validierungs_ergebnisse gespeichert")
+    else:
+        print("Validierungs_ergebnisse nicht gespeichert")
+    plt.show()
+
 
      
     
@@ -382,7 +406,7 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         # nur ausführen wenn Datei ready ist, sonst wird bestehende Datei überschrieben 
         df_neu_relevant.to_csv(name_new_1, sep=';', index=False,header= ["#Meteo hourly data",'', '', '', '', '','', ''])
 
-        print("abgespeichert - inklusive metadaten für koherenz andere Jahre prüfen!")
+        print(f"abgespeichert inklusive metadaten unter {name_new_1}")
     else:
         print("nicht gespeichert")
 
