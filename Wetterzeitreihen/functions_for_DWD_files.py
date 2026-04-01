@@ -300,10 +300,14 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         os.makedirs(folder_path_validation_specific, exist_ok=True)
         start_string = start.strftime("%Y-%m-%d")
         name_fig_ghi = ''.join([stationsID,"_",start_string,"_",timestep,'ghi.png'])
+        name_fig_ghi_2 = ''.join([stationsID,"_",start_string,"_",timestep,'ghi_full_year.png'])
         name_fig_tamb = ''.join([stationsID,"_",start_string,"_",timestep,'tamb.png'])
+        name_fig_tamb_2 = ''.join([stationsID,"_",start_string,"_",timestep,'tamb_full_year.png'])
         
         file_path_fig_ghi = os.path.join(folder_path_validation_specific, name_fig_ghi)
+        file_path_fig_ghi_2 = os.path.join(folder_path_validation_specific, name_fig_ghi_2)
         file_path_fig_tamb = os.path.join(folder_path_validation_specific, name_fig_tamb)
+        file_path_fig_tamb_2 = os.path.join(folder_path_validation_specific, name_fig_tamb_2)
 
         name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.csv'])
         file_path_df_validation = os.path.join(folder_path_validation_specific, name_df)
@@ -325,6 +329,8 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
     plt.grid(True)
     plt.tight_layout()
     
+
+    
     if save_validation:
         plt.savefig(file_path_fig_ghi)
         print("Validierungs_ergebnisse gespeichert")
@@ -332,6 +338,26 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         print("Validierungs_ergebnisse nicht gespeichert")
     plt.show()
 
+
+
+    plt.figure(figsize=(8,4))
+    plt.plot(UTC, df_neu_relevant['GHI'], linestyle="-")
+    plt.plot(UTC, df_neu_relevant['DHI'], linestyle="-")
+    plt.xlim(start, ende)
+    plt.legend
+    plt.xticks(rotation=45)
+    plt.xlabel("Zeitpunkt")
+    plt.ylabel("Globalstrahlung GHI")
+    plt.title(stationsID)
+    plt.grid(True)
+    plt.tight_layout()
+
+    if save_validation:
+        plt.savefig(file_path_fig_ghi_2)
+        print("Validierungs_ergebnisse gespeichert")
+    else:
+        print("Validierungs_ergebnisse nicht gespeichert")
+    plt.show()
 
         
     
@@ -353,6 +379,23 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         print("Validierungs_ergebnisse nicht gespeichert")
     plt.show()
 
+
+    plt.figure(figsize=(8,4))
+    plt.plot(UTC, df_neu_relevant['Tamb'], linestyle="-")
+    plt.xlim(start, ende)
+    plt.xticks(rotation=45)
+    plt.xlabel("Zeitpunkt")
+    plt.ylabel("Airtemp Tamb")
+    plt.title(stationsID)
+    plt.grid(True)
+    plt.tight_layout()
+
+    if save_validation:
+        plt.savefig(file_path_fig_tamb_2)
+        print("Validierungs_ergebnisse gespeichert")
+    else:
+        print("Validierungs_ergebnisse nicht gespeichert")
+    plt.show()
 
      
     
