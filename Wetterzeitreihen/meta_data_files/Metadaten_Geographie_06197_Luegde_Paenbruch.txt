@@ -1,0 +1,3 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+  6197;  257.63; 51.8664;  9.2711;20001011;20060928;Luegde-Paenbruch
+  6197;  257.63; 51.8664;  9.2710;20060929;        ;Luegde-Paenbruch
