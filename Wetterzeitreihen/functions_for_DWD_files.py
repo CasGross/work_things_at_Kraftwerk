@@ -7,7 +7,7 @@ def KML_in_dezimal(Kraftwerk):
     return long_kraftwerk, lat_kraftwerk
 
 
-def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
+def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk, all_years_2004_2024_2025_y_n ):
         
     import pandas as pd
     import numpy as np
@@ -19,10 +19,16 @@ def datenimport_als_function(year,datenval,lat_kraftwerk,long_kraftwerk):
     stationen_1h_meta = pd.read_csv(name_stations_excel,sep=';',decimal=',', skiprows=2)
     stationen_1h_meta
 
+    if all_years_2004_2024_2025_y_n :
 
+        indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  
+                             stationen_1h_meta["20251231"][i] == 1 and stationen_1h_meta["2025_Datenvalidierung"][i] != -1 and
+                             stationen_1h_meta["20241231"][i] == 1 and stationen_1h_meta["2024_Datenvalidierung"][i] != -1 and
+                             stationen_1h_meta["20041231"][i] == 1 and stationen_1h_meta["2004_Datenvalidierung"][i] != -1])    
+    else:
+        # indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1])
+        indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1 and stationen_1h_meta[datenval][i] != -1])
 
-    # indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1])
-    indicees_= np.array([i for i in range(len(stationen_1h_meta)-1) if  stationen_1h_meta[year][i] == 1 and stationen_1h_meta[datenval][i] != -1])
     # indicees_
     #stationen_mit_daten = stationen_1h_meta(indicees_)
     # stationen_mit_daten
