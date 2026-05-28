@@ -1,0 +1,5 @@
+Stations_id;Stationshoehe;Geogr.Breite;Geogr.Laenge;von_datum;bis_datum;Stationsname
+  3987;   80.86; 52.3812; 13.0622;18930101;19661231;Potsdam
+  3987;   80.86; 52.3812; 13.0622;19670101;19841231;Potsdam
+  3987;   80.86; 52.3812; 13.0622;19850101;20230705;Potsdam
+  3987;   80.86; 52.3812; 13.0622;20230706;        ;Potsdam
