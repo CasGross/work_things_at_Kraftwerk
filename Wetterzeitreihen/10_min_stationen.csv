@@ -195,7 +195,7 @@ Stations_id von_datum bis_datum Stationshoehe geoBreite geoLaenge Stationsname B
 03875 20041020 20230921 549 49.1510 11.6897 Parsberg/Oberpfalz-Eglwang Bayern Frei
 03897 20060804 20200416 2 54.0893 10.8773 Pelzerhaken Schleswig-Holstein Frei
 03904 20040608 20240409 152 49.5354 6.3789 Perl-Nennig Saarland Frei
-03946 19911101 20210422 387 50.4818 12.1300 Plauen Sachsen Frei
+03946 19911101 20210422 387 50.4818 12.1900 Plauen Sachsen Frei
 03975 20041124 20200813 522 49.4777 11.5357 Pommelsbrunn-Mittelburg Bayern Frei
 03987 19920816 20260115 81 52.3812 13.0622 Potsdam Brandenburg Frei
 04024 19911101 20240125 40 54.3643 13.4771 Putbus Mecklenburg-Vorpommern Frei
@@ -213,7 +213,7 @@ Stations_id von_datum bis_datum Stationshoehe geoBreite geoLaenge Stationsname B
 04261 20060208 20240412 444 47.8819 12.1249 Rosenheim Bayern Frei
 04271 19920521 20260115 5 54.1803 12.0808 Rostock-Warnemünde Mecklenburg-Vorpommern Frei
 04275 20041111 20230611 32 53.1289 9.3398 Rotenburg (Wümme) Niedersachsen Frei
-04300 20040123 20241210 589 48.1815 8.6356 Rottweil Baden-Württemberg Frei
+04900 20040123 20241210 589 48.1815 8.6356 Rottweil Baden-Württemberg Frei
 04301 20040831 20250725 102 49.8502 7.8710 Kreuznach, Bad Rheinland-Pfalz Frei
 04336 19960620 20260115 319 49.2128 7.1077 Saarbrücken-Ensheim Saarland Frei
 04347 20001011 20030708 293 51.5909 10.5691 Sachsa, Bad Niedersachsen Frei
@@ -296,7 +296,7 @@ Stations_id von_datum bis_datum Stationshoehe geoBreite geoLaenge Stationsname B
 06265 20040123 20231122 36 52.3613 12.3867 Wusterwitz Brandenburg Frei
 06310 20040614 20230909 1 54.1049 13.8239 Karlshagen Mecklenburg-Vorpommern Frei
 06312 20040928 20200930 362 49.5314 10.6418 Markt Erlbach-Mosbach Bayern Frei
-06314 20050609 20231004 306 51.0507 13.3003 Nossen Sachsen Frei
+06314 20050609 20231004 306 51.0507 13.9003 Nossen Sachsen Frei
 06337 20040621 20231122 58 51.7663 7.5194 Lüdinghausen-Brochtrup Nordrhein-Westfalen Frei
 06344 20041020 20250616 168 50.3940 8.1423 Runkel-Ennerich Hessen Frei
 06347 20041007 20240307 305 50.0579 10.2972 Schonungen-Mainberg Bayern Frei

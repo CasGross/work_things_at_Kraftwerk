@@ -309,11 +309,15 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         name_fig_ghi_2 = ''.join([stationsID,"_",start_string,"_",timestep,'ghi_full_year.png'])
         name_fig_tamb = ''.join([stationsID,"_",start_string,"_",timestep,'tamb.png'])
         name_fig_tamb_2 = ''.join([stationsID,"_",start_string,"_",timestep,'tamb_full_year.png'])
+        name_ghi = ''.join([stationsID,"_",start_string,"_",timestep,'ghi_full_year.pdf'])
+        name_tamb = ''.join([stationsID,"_",start_string,"_",timestep,'tamb_full_year.pdf'])
         
         file_path_fig_ghi = os.path.join(folder_path_validation_specific, name_fig_ghi)
         file_path_fig_ghi_2 = os.path.join(folder_path_validation_specific, name_fig_ghi_2)
         file_path_fig_tamb = os.path.join(folder_path_validation_specific, name_fig_tamb)
         file_path_fig_tamb_2 = os.path.join(folder_path_validation_specific, name_fig_tamb_2)
+        file_path_fig_ghi = os.path.join(folder_path_validation_specific, name_ghi)
+        file_path_fig_tamb = os.path.join(folder_path_validation_specific, name_tamb)
 
         name_df = ''.join([stationsID,"_",start_string,"_",timestep,'.csv'])
         file_path_df_validation = os.path.join(folder_path_validation_specific, name_df)
@@ -322,21 +326,33 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
         
 
 
-        
-    # print(f"Fehlerwerte GHI: {len(negative_indices_ghi)}")
-    plt.figure(figsize=(8,4))
-    plt.plot(UTC.loc[negative_indices_ghi], df_neu_relevant.loc[negative_indices_ghi]['Hour'], linestyle="none", marker="x")
-    plt.xlim(start, ende)
-    plt.ylim(0, 24)
-    plt.xticks(rotation=45)
-    plt.xlabel("Zeitpunkt im Jahr für GHI-Fehlerwert")
-    plt.ylabel("Uhrzeit des Fehlerwerts")
-    plt.title(stationsID)
-    plt.grid(True)
-    plt.tight_layout()
-    
 
+    fig, axs = plt.subplots(1, 2, figsize=(14,6))  
     
+    # print(f"Fehlerwerte GHI: {len(negative_indices_ghi)}")
+    # plt.figure(figsize=(8,4))
+    axs[0].plot(UTC.loc[negative_indices_ghi], df_neu_relevant.loc[negative_indices_ghi]['Hour'], linestyle="none", marker="x")
+    axs[0].set_xlim(start, ende)
+    axs[ 0].set_ylim(0, 24)
+    axs[ 0].tick_params(axis='x', rotation=45)
+    axs[ 0].set_xlabel("Zeitpunkt im Jahr für GHI-Fehlerwert")
+    axs[ 0].set_ylabel("Uhrzeit des Fehlerwerts")
+    axs[ 0].set_title("Fehlerwert Validierung")
+    axs[ 0].grid(True)
+
+    axs[ 1].plot(UTC, df_neu_relevant['GHI'], linestyle="-",label="Global Horizontal Irradiation GHI" )
+    axs[ 1].plot(UTC, df_neu_relevant['DHI'], linestyle="-", label="Diffuse Horizontal Irradiation GHI")
+    axs[ 1].set_xlim(start, ende)
+    axs[ 1].legend()
+    axs[ 1].tick_params(axis='x', rotation=45)
+    axs[ 1].set_xlabel("Zeitpunkt")
+    axs[ 1].set_ylabel("Globalstrahlung GHI")
+    axs[ 1].set_title("Profil der horizontalen Einstrahlung")
+    axs[ 1].grid(True)
+
+    fig.tight_layout(pad=5.0)
+
+
     if save_validation:
         plt.savefig(file_path_fig_ghi)
         print("Validierungs_ergebnisse gespeichert")
@@ -345,39 +361,29 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
     plt.show()
 
 
+    fig, axs = plt.subplots(1, 2, figsize=(14,6)) 
 
-    plt.figure(figsize=(8,4))
-    plt.plot(UTC, df_neu_relevant['GHI'], linestyle="-")
-    plt.plot(UTC, df_neu_relevant['DHI'], linestyle="-")
-    plt.xlim(start, ende)
-    plt.legend
-    plt.xticks(rotation=45)
-    plt.xlabel("Zeitpunkt")
-    plt.ylabel("Globalstrahlung GHI")
-    plt.title(stationsID)
-    plt.grid(True)
-    plt.tight_layout()
-
-    if save_validation:
-        plt.savefig(file_path_fig_ghi_2)
-        print("Validierungs_ergebnisse gespeichert")
-    else:
-        print("Validierungs_ergebnisse nicht gespeichert")
-    plt.show()
-
-        
+    axs[ 0].plot(UTC.loc[negative_indices_tamb], df_neu_relevant.loc[negative_indices_tamb]['Hour'], linestyle="none", marker="x")
+    axs[ 0].set_xlim(start, ende)
+    axs[ 0].set_ylim(0, 24)
+    axs[ 0].tick_params(axis='x', rotation=45)
+    axs[ 0].set_xlabel("Zeitpunkt im Jahr für T_Amb Fehlerwert")
+    axs[ 0].set_ylabel("Uhrzeit des Fehlerwerts")
+    axs[ 0].set_title("Fehlerwert Validierung")
+    axs[ 0].grid(True)
     
-    plt.figure(figsize=(8,4))
-    plt.plot(UTC.loc[negative_indices_tamb], df_neu_relevant.loc[negative_indices_tamb]['Hour'], linestyle="none", marker="x")
-    plt.xlim(start, ende)
-    plt.ylim(0, 24)
-    plt.xticks(rotation=45)
-    plt.xlabel("Zeitpunkt im Jahr für T-amb-Fehlerwert")
-    plt.ylabel("Uhrzeit des Fehlerwerts")
-    plt.title(stationsID)
-    plt.grid(True)
-    plt.tight_layout()
-    
+
+    axs[ 1].plot(UTC, df_neu_relevant['Tamb'], linestyle="-")
+    axs[ 1].set_xlim(start, ende)
+    axs[ 1].tick_params(axis='x', rotation=45)
+    axs[ 1].set_xlabel("Zeitpunkt")
+    axs[ 1].set_ylabel("gemessene Lufttemp")
+    axs[ 1].set_title("Temperaturverlauf")
+    axs[ 1].grid(True)
+
+    fig.tight_layout(pad=5.0)
+
+
     if save_validation:
         plt.savefig(file_path_fig_tamb)
         print("Validierungs_ergebnisse gespeichert")
@@ -386,22 +392,90 @@ def wetter_daten_laden_und_auf_fehler_checken(dateinamen_als_liste ,year , save_
     plt.show()
 
 
-    plt.figure(figsize=(8,4))
-    plt.plot(UTC, df_neu_relevant['Tamb'], linestyle="-")
-    plt.xlim(start, ende)
-    plt.xticks(rotation=45)
-    plt.xlabel("Zeitpunkt")
-    plt.ylabel("Airtemp Tamb")
-    plt.title(stationsID)
-    plt.grid(True)
-    plt.tight_layout()
 
-    if save_validation:
-        plt.savefig(file_path_fig_tamb_2)
-        print("Validierungs_ergebnisse gespeichert")
-    else:
-        print("Validierungs_ergebnisse nicht gespeichert")
-    plt.show()
+
+    # # print(f"Fehlerwerte GHI: {len(negative_indices_ghi)}")
+    # plt.figure(figsize=(8,4))
+    # plt.plot(UTC.loc[negative_indices_ghi], df_neu_relevant.loc[negative_indices_ghi]['Hour'], linestyle="none", marker="x")
+    # plt.xlim(start, ende)
+    # plt.ylim(0, 24)
+    # plt.xticks(rotation=45)
+    # plt.xlabel("Zeitpunkt im Jahr für GHI-Fehlerwert")
+    # plt.ylabel("Uhrzeit des Fehlerwerts")
+    # plt.title(stationsID)
+    # plt.grid(True)
+    # plt.tight_layout()
+    
+
+    
+    # if save_validation:
+    #     plt.savefig(file_path_fig_ghi)
+    #     print("Validierungs_ergebnisse gespeichert")
+    # else:
+    #     print("Validierungs_ergebnisse nicht gespeichert")
+    # plt.show()
+
+
+
+    # plt.figure(figsize=(8,4))
+    # plt.plot(UTC, df_neu_relevant['GHI'], linestyle="-")
+    # plt.plot(UTC, df_neu_relevant['DHI'], linestyle="-")
+    # plt.xlim(start, ende)
+    # plt.legend
+    # plt.xticks(rotation=45)
+    # plt.xlabel("Zeitpunkt")
+    # plt.ylabel("Globalstrahlung GHI")
+    # plt.title(stationsID)
+    # plt.grid(True)
+    # plt.tight_layout()
+
+    # if save_validation:
+    #     plt.savefig(file_path_fig_ghi_2)
+    #     print("Validierungs_ergebnisse gespeichert")
+    # else:
+    #     print("Validierungs_ergebnisse nicht gespeichert")
+    # plt.show()
+
+        
+    
+    # plt.figure(figsize=(8,4))
+    # plt.plot(UTC.loc[negative_indices_tamb], df_neu_relevant.loc[negative_indices_tamb]['Hour'], linestyle="none", marker="x")
+    # plt.xlim(start, ende)
+    # plt.ylim(0, 24)
+    # plt.xticks(rotation=45)
+    # plt.xlabel("Zeitpunkt im Jahr für T-amb-Fehlerwert")
+    # plt.ylabel("Uhrzeit des Fehlerwerts")
+    # plt.title(stationsID)
+    # plt.grid(True)
+    # plt.tight_layout()
+    
+    # if save_validation:
+    #     plt.savefig(file_path_fig_tamb)
+    #     print("Validierungs_ergebnisse gespeichert")
+    # else:
+    #     print("Validierungs_ergebnisse nicht gespeichert")
+    # plt.show()
+
+
+    # plt.figure(figsize=(8,4))
+    # plt.plot(UTC, df_neu_relevant['Tamb'], linestyle="-")
+    # plt.xlim(start, ende)
+    # plt.xticks(rotation=45)
+    # plt.xlabel("Zeitpunkt")
+    # plt.ylabel("Airtemp Tamb")
+    # plt.title(stationsID)
+    # plt.grid(True)
+    # plt.tight_layout()
+
+    # if save_validation:
+    #     plt.savefig(file_path_fig_tamb_2)
+    #     print("Validierungs_ergebnisse gespeichert")
+    # else:
+    #     print("Validierungs_ergebnisse nicht gespeichert")
+    # plt.show()
+
+
+    
 
      
     
